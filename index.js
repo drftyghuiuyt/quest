@@ -1,21 +1,10 @@
-function permuteUnique(nums) {
+function generateParenthesis(n) {
   const result = [];
-  nums.sort((a, b) => a - b);
-  backtrack([], new Array(nums.length).fill(false));
+  backtrack("", 0, 0);
   return result;
-  function backtrack(current, used) {
-    if (current.length === nums.length) {
-      result.push([...current]);
-      return;
-    }
-    for (let i = 0; i < nums.length; i++) {
-      if (used[i] || (i > 0 && nums[i] === nums[i - 1] && !used[i - 1]))
-        continue;
-      current.push(nums[i]);
-      used[i] = true;
-      backtrack(current, used);
-      current.pop();
-      used[i] = false;
-    }
+  function backtrack(current, open, close) {
+    if (current.length === 2 * n) result.push(current);
+    if (open < n) backtrack(current + "(", open + 1, close);
+    if (close < open) backtrack(current + ")", open, close + 1);
   }
 }
